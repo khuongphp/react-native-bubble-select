@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Magnetic
 import SpriteKit
 
 class RNBubbleSelectNodeView: UIView {
@@ -33,13 +32,14 @@ class RNBubbleSelectNodeView: UIView {
   var animationDuration: CGFloat?
   var selectedColor: UIColor?
   var selectedFontColor: UIColor?
+  var scaleToFitContent: Bool = true
   
-  lazy var node: EnchancedNode = {
-    let node = EnchancedNode(
+  lazy var node: Node = {
+    let node = Node(
       text: text,
       image: image,
-      color: color ?? EnchancedNode.Defaults.Color,
-      radius: radius ?? EnchancedNode.Defaults.Radius
+      color: color ?? .black,
+      radius: radius ?? 30
     )
     return node
   }()
@@ -50,15 +50,16 @@ class RNBubbleSelectNodeView: UIView {
   
   func updateNode() {
     node.id = id
-    node.fontName = fontName ?? EnchancedNode.Defaults.FontName
-    node.fontSize = fontSize ?? EnchancedNode.Defaults.FontSize
-    node.fontColor = fontColor ?? EnchancedNode.Defaults.FontColor
+    node.fontName = fontName ?? Node.Defaults.fontName
+    node.fontSize = fontSize ?? Node.Defaults.fontSize
+    node.fontColor = fontColor ?? Node.Defaults.fontColor
     node.label.lineHeight = lineHeight
-    node.borderColor = borderColor ?? EnchancedNode.Defaults.BorderColor
-    node.borderWidth = borderWidth ?? EnchancedNode.Defaults.BorderWidth
-    node.color = color ?? EnchancedNode.Defaults.Color
+    node.borderColor = borderColor ?? Node.Defaults.borderColor
+    node.borderWidth = borderWidth ?? Node.Defaults.borderWidth
+    node.color = color ?? Node.Defaults.color
     node.text = text
-    node.padding = padding ?? EnchancedNode.Defaults.Padding
+    node.padding = padding ?? Node.Defaults.padding
+    node.scaleToFitContent = scaleToFitContent
     
     if let selectedScale = selectedScale {
       node.selectedScale = selectedScale
@@ -174,6 +175,11 @@ extension RNBubbleSelectNodeView {
   
   @objc func setSelectedFontColor(_ fontColor: UIColor?) {
     self.selectedFontColor = fontColor
+    updateNode()
+  }
+  
+  @objc func setAutoSize(_ autoSize: Bool) {
+    self.scaleToFitContent = autoSize
     updateNode()
   }
 }

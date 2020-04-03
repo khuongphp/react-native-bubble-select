@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Magnetic
 
 extension MagneticView {
   
@@ -19,6 +18,7 @@ extension MagneticView {
     guard let subview = subview as? RNBubbleSelectNodeView else { return }
     subview.node.removeFromParent()
   }
+  
   
   // Stub functions to make sure RN works
   @objc func setOnSelect(_ onSelectNode: RCTDirectEventBlock?) {
